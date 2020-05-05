@@ -40,6 +40,7 @@ find_package(Ceres REQUIRED)
 find_package(Gflags REQUIRED)
 find_package(Glog REQUIRED)
 
+
 find_package(OpenCV)
 # OpenCV's OpenCVConfig will enforce imgcodecs for < 3.0 
 # (even if OPTIONAL_COMPONENTS) so we remove it as we don't need it
@@ -47,8 +48,14 @@ find_package(OpenCV)
 if(${OpenCV_VERSION} LESS 3.0)
     find_package(OpenCV REQUIRED core imgproc calib3d)
 else()
-    find_package(OpenCV REQUIRED core imgproc calib3d OPTIONAL_COMPONENTS imgcodecs)
+    #find_package(OpenCV REQUIRED core imgproc calib3d OPTIONAL_COMPONENTS imgcodecs)
+    find_package(OpenCV REQUIRED core imgproc calib3d features2d)
 endif()
+
+include_directories(
+    ${OpenCV_INCLUDE_DIRS} 
+    ${GFLAGS_INCLUDE_DIR}
+)
 
 ####### Third party libraries #######
 add_subdirectory(third_party/pybind11)
